@@ -2,7 +2,7 @@ require 'string_calculator'
 
 RSpec.describe StringCalculator do
   let(:subject) { described_class.new.add(numbers) }
-  let(:numbers) { "1,2" }
+  let(:numbers) { '1,2' }
 
   describe '#add' do
     context 'when numbers are empty' do
@@ -27,14 +27,14 @@ RSpec.describe StringCalculator do
     end
 
     context 'when numbers are a comma-separated string' do
-      let(:numbers) { "1,2" }
+      let(:numbers) { '1,2' }
       it 'returns the sum of the numbers' do
         expect(subject).to eq(3)
       end
     end
 
     context 'when numbers are large amount' do
-      let(:numbers) { "1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10" }
+      let(:numbers) { '1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10' }
       it 'returns the sum of the numbers' do
         expect(subject).to eq(165)
       end
@@ -58,6 +58,34 @@ RSpec.describe StringCalculator do
       let(:numbers) { "//;\n1;2;3" }
       it 'returns the sum of the numbers' do
         expect(subject).to eq(6)
+      end
+    end
+
+    context 'when numbers contain negative numbers' do
+      let(:numbers) { '1,-2,3' }
+      it 'raises an error' do
+        expect { subject }.to raise_error('Negative numbers not allowed: -2')
+      end
+    end
+
+    context 'when numbers contain multiple negative numbers' do
+      let(:numbers) { '1,-2,-3' }
+      it 'raises an error' do
+        expect { subject }.to raise_error('Negative numbers not allowed: -2, -3')
+      end
+    end
+
+    context 'when numbers contain a mix of positive and negative numbers' do
+      let(:numbers) { '1,-2,3,-4' }
+      it 'raises an error' do
+        expect { subject }.to raise_error('Negative numbers not allowed: -2, -4')
+      end
+    end
+
+    context 'when numbers contain a mix of positive and negative numbers with custom delimiter' do
+      let(:numbers) { '//:\n1:-2:3:-4' }
+      it 'raises an error' do
+        expect { subject }.to raise_error('Negative numbers not allowed: -2, -4')
       end
     end
   end
