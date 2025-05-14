@@ -36,7 +36,21 @@ RSpec.describe StringCalculator do
     context 'when numbers are large amount' do
       let(:numbers) { "1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10" }
       it 'returns the sum of the numbers' do
-        expect(subject).to eq(150)
+        expect(subject).to eq(165)
+      end
+    end
+
+    context 'when numbers are a newline-separated string' do
+      let(:numbers) { "1\n2\n3" }
+      it 'returns the sum of the numbers' do
+        expect(subject).to eq(6)
+      end
+    end
+
+    context 'when numbers are a mix of comma and newline' do
+      let(:numbers) { "1\n2,3" }
+      it 'returns the sum of the numbers' do
+        expect(subject).to eq(6)
       end
     end
   end
