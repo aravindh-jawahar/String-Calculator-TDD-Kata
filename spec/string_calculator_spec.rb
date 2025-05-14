@@ -6,7 +6,7 @@ RSpec.describe StringCalculator do
 
   describe '#add' do
     context 'when numbers are empty' do
-      let(:numbers) { "" }
+      let(:numbers) { '' }
       it 'returns 0' do
         expect(subject).to eq(0)
       end
@@ -20,7 +20,7 @@ RSpec.describe StringCalculator do
     end
 
     context 'when numbers are a single number' do
-      let(:numbers) { "5" }
+      let(:numbers) { '5' }
       it 'returns the number itself' do
         expect(subject).to eq(5)
       end
@@ -49,6 +49,13 @@ RSpec.describe StringCalculator do
 
     context 'when numbers are a mix of comma and newline' do
       let(:numbers) { "1\n2,3" }
+      it 'returns the sum of the numbers' do
+        expect(subject).to eq(6)
+      end
+    end
+
+    context 'when numbers contain a custom delimiter' do
+      let(:numbers) { "//;\n1;2;3" }
       it 'returns the sum of the numbers' do
         expect(subject).to eq(6)
       end
