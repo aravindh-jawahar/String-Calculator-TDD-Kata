@@ -83,7 +83,7 @@ RSpec.describe StringCalculator do
     end
 
     context 'when numbers contain a mix of positive and negative numbers with custom delimiter' do
-      let(:numbers) { '//:\n1:-2:3:-4' }
+      let(:numbers) { "//:\n1:-2:3:-4" }
       it 'raises an error' do
         expect { subject }.to raise_error('Negative numbers not allowed: -2, -4')
       end
@@ -97,16 +97,41 @@ RSpec.describe StringCalculator do
     end
 
     context 'when number has a value greater than 1000 with custom delimiter' do
-      let(:numbers) { '//:\n1001:2:3' }
+      let(:numbers) { "//:\n1001:2:3" }
       it 'ignores the number greater than 1000' do
         expect(subject).to eq(5)
       end
     end
 
     context 'when number has a value greater than 1000 with custom delimiter and negative numbers' do
-      let(:numbers) { '//:\n1001:-2:3:-4' }
+      let(:numbers) { "//:\n1001:-2:3:-4" }
       it 'raises an error' do
         expect { subject }.to raise_error('Negative numbers not allowed: -2, -4')
+      end
+    end
+
+    context 'when numbers contain multiple custom delimiters' do
+      let(:numbers) { "//[;][:]\n1;2:3" }
+      it 'returns the sum of the numbers' do
+        expect(subject).to eq(6)
+      end
+    end
+    context 'when numbers contain multiple custom delimiters with different lengths' do
+      let(:numbers) { "//[***][|||]\n1***2|||3" }
+      it 'returns the sum of the numbers' do
+        expect(subject).to eq(6)
+      end
+    end
+    context 'when numbers contain multiple custom delimiters with different lengths and negative numbers' do
+      let(:numbers) { "//[***][|||]\n1***-2|||3" }
+      it 'raises an error' do
+        expect { subject }.to raise_error('Negative numbers not allowed: -2')
+      end
+    end
+    context 'when numbers contain multiple custom delimiters with different lengths and numbers greater than 1000' do
+      let(:numbers) { "//[***][|||]\n1***1001|||3" }
+      it 'ignores the number greater than 1000' do
+        expect(subject).to eq(4)
       end
     end
   end
