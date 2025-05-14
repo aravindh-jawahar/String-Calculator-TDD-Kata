@@ -16,7 +16,6 @@ This project is an implementation of the String Calculator Kata using Test-Drive
 ## Gems Used
 
 - `rspec` - For writing and running unit tests.
-- `simplecov` - For tracking test coverage and ensuring code quality.
 
 ## How to Run
 
